@@ -60,7 +60,8 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input id="firstClass-count" class="inp-style inp-width" type="number" name="">
+                    <h6 class="fClass"> Ticket = $<span id="firstClass-amount">00</span> </h6>
+                    <input id="firstClass-count" class="inp-style inp-width" type="number" value="0">
                 </div>
                 <div class="plus-minus-btn button-position">
                     <button id="firstClass-minus" type="button" class=" minus-button  btn btn-primary">-</button>
@@ -71,7 +72,8 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
-                    <input id="economy-count" class="inp-style inp-width" type="number" name="">
+                    <h6 class="fClass">Ticket = $<span id="economy-amount">00</span></h6>
+                    <input id="economy-count" class="inp-style inp-width" type="number" name="" value="0">
                 </div>
                 <div class="plus-minus-btn button-position">
                     <button id="economy-minus" type="button" class=" minus-button  btn btn-primary">-</button>
@@ -84,7 +86,7 @@
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <p>$ <span id="sub-total">00</span></p>
                     </div>
                 </div>
 
@@ -93,7 +95,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <p>$ <span id="count-vat">00</span></p>
                     </div>
                 </div>
                 <hr>
@@ -102,11 +104,33 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <p>$ <span id="totalAmount">00</span></p>
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="book-section" type="button" class="btn-style " data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">Book Now</button>
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class=" d-flex justify-content-center">
+                            <img id="img-sizing" src="images/green-tik.png" alt="">
+                        </div>
+                        <div class="modal-body d-flex justify-content-center ">
+                            <div>
+                                <h4> Congratulations Your E-ticket Booking <br> Successfully Done </h4>
+                                <p>Thanks For Staying With Us</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center ">
+                            <button type="button" class=" btn btn-primary" data-bs-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="booking-content">
@@ -118,6 +142,77 @@
         </section>
 
         <!--Thank You-->
+
+        <script>
+
+            document.getElementById('firstClass-plus').addEventListener('click', function () {
+                firstClassHandeler(true);
+
+            });
+
+            document.getElementById('firstClass-minus').addEventListener('click', function () {
+                firstClassHandeler(false);
+
+
+            });
+
+            document.getElementById('economy-plus').addEventListener('click', function () {
+                economyHandeler(true);
+
+            });
+
+            document.getElementById('economy-minus').addEventListener('click', function () {
+                economyHandeler(false);
+            });
+
+            function firstClassHandeler(isIncrease) {
+                const firstClassInput = document.getElementById('firstClass-count');
+                const firstClasscount = parseInt(firstClassInput.value);
+                // const firstClassNewCount = firstClasscount + 1 ;
+                let firstClassNewCount = firstClasscount;
+                if (isIncrease == true) {
+                    firstClassNewCount = firstClasscount + 1;
+                }
+                if (isIncrease == false && firstClasscount > 0) {
+                    firstClassNewCount = firstClasscount - 1;
+                }
+                firstClassInput.value = firstClassNewCount;
+                const totalFclassAmount = firstClassNewCount * 150;
+                document.getElementById('firstClass-amount').innerText = totalFclassAmount;
+                totalCalculation();
+            }
+
+
+            function economyHandeler(isIncrease2) {
+                const economyInput = document.getElementById('economy-count');
+                const economycount = parseInt(economyInput.value);
+                let economyNewcount = economycount;
+                if (isIncrease2 == true) {
+                    economyNewcount = economycount + 1;
+                }
+                if (isIncrease2 == false && economycount > 0) {
+                    economyNewcount = economycount - 1;
+                }
+                economyInput.value = economyNewcount;
+                const totalEconomyAmount = economyNewcount * 100;
+                document.getElementById('economy-amount').innerText = totalEconomyAmount;
+                totalCalculation();
+            }
+
+            function totalCalculation() {
+                const firstClassInput = document.getElementById('firstClass-count');
+                const firstClasscount = parseInt(firstClassInput.value);
+                const economyInput = document.getElementById('economy-count');
+                const economycount = parseInt(economyInput.value);
+                const totalPrice = firstClasscount * 150 + economycount * 100;
+                document.getElementById('sub-total').innerText = totalPrice;
+                const totalVat = Math.round(totalPrice * 0.1);
+                document.getElementById('count-vat').innerText = totalVat;
+                const finalTotal = totalPrice + totalVat;
+                document.getElementById('totalAmount').innerText = finalTotal;
+
+            }
+        </script>
 
 </body>
 
